@@ -7,6 +7,7 @@ const db = require('./db.js');
 //----------------
 // This is a mock db call that waits for # milliseconds and returns
 const mockDBCall = (dataAccessMethod) => {
+    //throw new Error('error');
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(dataAccessMethod());
@@ -46,7 +47,6 @@ const getListOfAgesOfUsersWith = (item) => {
                 map[person.age] = 1;
             }
         })
-
         return map;
     }
     return mockDBCall(dataAccessMethod);

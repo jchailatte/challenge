@@ -13,6 +13,22 @@ app.use(express.static(path.join(__dirname, '../public')));
 // register routes
 registerRoutes(app);
 
+//error handling
+const clientErrorHandler = (err, req, res, next) => {
+    if (req.xhr) {
+        res.status(500).send({ error: "Something failed" });
+    } else {
+        next(err);
+    }
+};
+const errorHandler = (err, req, res, next) => {
+    res.status(500);
+    res.render("error", { error: err });
+};
+// error handler
+app.use(clientErrorHandler);
+app.use(errorHandler);
+
 // create server start method
 const start = () => {
     return new Promise((resolve, reject) => {

@@ -10,6 +10,7 @@ const mockDBCall = (dataAccessMethod) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(dataAccessMethod());
+            //reject()
         }, 500);
     });
 };

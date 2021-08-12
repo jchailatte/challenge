@@ -7,6 +7,9 @@ const App = () => {
     const [items, setItems] = React.useState([]);
     const [selectedItem, setSelectedItem] = React.useState("__")
 
+    const [loadingUsers, setLoadingUsers] = React.useState(true);
+    const [loadingAgeDemo, setLoadingAgeDemo] = React.useState(false);
+
     //fetching user and item data
     React.useEffect(() => {
         fetch("http://localhost:3000/users")
@@ -19,6 +22,7 @@ const App = () => {
             .then(data => {
                 //console.log(data);
                 setUsers(data);
+                setLoadingUsers(false);
             })
             .catch(error => {
                 console.log(error);
@@ -42,6 +46,7 @@ const App = () => {
 
     //fetching user/age data everytime an item gets selected
     React.useEffect(() => {
+        setLoadingAgeDemo(true);
         fetch("http://localhost:3000/users/age?item=" + selectedItem)
             .then(response => {
                 if (!response.ok) {
@@ -52,6 +57,7 @@ const App = () => {
             .then(data => {
                 //console.log(data);
                 setAgeDemo(data);
+                setLoadingAgeDemo(false);
             })
             .catch(error => {
                 console.log(error);
@@ -64,28 +70,30 @@ const App = () => {
                 <div>
                     <h1><b>All Users</b></h1>
                     <h3>Users and their ages</h3>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Username</th>
-                                <th scope="col">Age</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {users.map((user, i) => {
-                                return (
-                                    <tr key={"user" + i}>
-                                        <td>{user.username}</td>
-                                        <td>{user.age}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
+                    {loadingUsers ? <h3>Loading...</h3> :
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Age</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {users.map((user, i) => {
+                                    return (
+                                        <tr key={"user" + i}>
+                                            <td>{user.username}</td>
+                                            <td>{user.age}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    }
                 </div>
                 <div>
                     <h1><b>Age Demographic of Users with {selectedItem}</b></h1>
-                    <div 
+                    <div
                         className="itemSelect"
                     >
                         <select
@@ -107,26 +115,28 @@ const App = () => {
                             })}
                         </select>
                     </div>
-                    <table
-                        className="table"
-                    >
-                        <thead>
-                            <tr>
-                                <th scope="col">Username</th>
-                                <th scope="col">Count</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Object.entries(ageDemo).map((entry, i) => {
-                                return (
-                                    <tr key={"user" + i}>
-                                        <td>{entry[0]}</td>
-                                        <td>{entry[1]}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
+                    {loadingAgeDemo ? <h3>Loading...</h3> :
+                        <table
+                            className="table"
+                        >
+                            <thead>
+                                <tr>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Object.entries(ageDemo).map((entry, i) => {
+                                    return (
+                                        <tr key={"user" + i}>
+                                            <td>{entry[0]}</td>
+                                            <td>{entry[1]}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    }
                 </div>
             </div>
         </React.Fragment>

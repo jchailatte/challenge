@@ -17,7 +17,7 @@ const App = () => {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
+                //console.log(data);
                 setUsers(data);
             })
             .catch(error => {
@@ -32,7 +32,7 @@ const App = () => {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
+                //console.log(data);
                 setItems(data);
             })
             .catch(error => {
@@ -50,14 +50,12 @@ const App = () => {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
+                //console.log(data);
                 setAgeDemo(data);
             })
             .catch(error => {
                 console.log(error);
             })
-
-        console.log(selectedItem)
     }, [selectedItem])
 
     return (

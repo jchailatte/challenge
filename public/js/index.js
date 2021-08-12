@@ -7,7 +7,7 @@ const App = () => {
     const [items, setItems] = React.useState([]);
     const [selectedItem, setSelectedItem] = React.useState("__")
 
-    //fetching user data
+    //fetching user and item data
     React.useEffect(() => {
         fetch("http://localhost:3000/users")
             .then(response => {
@@ -40,24 +40,25 @@ const App = () => {
             })
     }, []);
 
-    React.useEffect(()=>{
+    //fetching user/age data everytime an item gets selected
+    React.useEffect(() => {
         fetch("http://localhost:3000/users/age?item=" + selectedItem)
-        .then(response => {
-            if (!response.ok) {
-                throw Error("Error");
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-            setAgeDemo(data);
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(response => {
+                if (!response.ok) {
+                    throw Error("Error");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                setAgeDemo(data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
 
         console.log(selectedItem)
-    },[selectedItem])
+    }, [selectedItem])
 
     return (
         <React.Fragment>
@@ -65,7 +66,7 @@ const App = () => {
                 <div>
                     <h1><b>All Users</b></h1>
                     <h3>Users and their ages</h3>
-                    <table >
+                    <table className="table">
                         <thead>
                             <tr>
                                 <th scope="col">Username</th>
@@ -86,25 +87,31 @@ const App = () => {
                 </div>
                 <div>
                     <h1><b>Age Demographic of Users with {selectedItem}</b></h1>
-                    <select 
-                        value="none"
-                        onChange={(e)=> setSelectedItem(e.target.value)}
+                    <div 
+                        className="itemSelect"
                     >
-                        <option value="none" disabled hidden>
-                            Items
-                        </option>
-                        {items.map((item, i) => {
-                            return (
-                                <option
-                                    key={"item" + i}
-                                    value={item}
-                                >
-                                    {item}
-                                </option>
-                            )
-                        })}
-                    </select>
-                    <table >
+                        <select
+                            value="none"
+                            onChange={(e) => setSelectedItem(e.target.value)}
+                        >
+                            <option value="none" disabled hidden>
+                                Items
+                            </option>
+                            {items.map((item, i) => {
+                                return (
+                                    <option
+                                        key={"item" + i}
+                                        value={item}
+                                    >
+                                        {item}
+                                    </option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                    <table
+                        className="table"
+                    >
                         <thead>
                             <tr>
                                 <th scope="col">Username</th>

@@ -1,3 +1,40 @@
-.container { 
-    padding: 5rem;
+.container {
+  padding: 5rem;
+}
+
+.table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 3rem;
+}
+
+.table td,
+#table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.itemSelect {
+  border: 1px solid #ccc;
+  width: 100%;
+  border-radius: 3px;
+  overflow: hidden;
+  background-color: navy;
+  border-radius: 5px;
+}
+
+.itemSelect select {
+  padding: 5px 8px;
+  width: 100%;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  color: white;
+  background-color: navy;
+  font-size: 1.5rem;
+}
+
+.itemSelect select:focus {
+  outline: none;
 }
